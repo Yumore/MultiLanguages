@@ -3,8 +3,13 @@ package com.github.jokar.multilanguages.app
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
+import com.github.jokar.multilanguages.library.LanguageLocalListener
 import com.github.jokar.multilanguages.library.MultiLanguage
+import com.github.jokar.multilanguages.library.MultiLanguage.init
+import com.github.jokar.multilanguages.library.MultiLanguage.setApplicationLanguage
 import com.github.jokar.multilanguages.utils.LocalManageUtil
+import java.util.*
+
 
 class MultiLanguagesApp : Application() {
     override fun attachBaseContext(base: Context) {
@@ -22,9 +27,12 @@ class MultiLanguagesApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        MultiLanguage.init { context -> //返回自己本地保存选择的语言设置
-            LocalManageUtil.getSetLanguageLocale(context)
-        }
-        MultiLanguage.setApplicationLanguage(this)
+        init(object : LanguageLocalListener {
+            override fun getSetLanguageLocale(context: Context?): Locale? {
+                //返回自己本地保存选择的语言设置
+                return LocalManageUtil.getSetLanguageLocale(context!!)
+            }
+        })
+        setApplicationLanguage(this)
     }
 }

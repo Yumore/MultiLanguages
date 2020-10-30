@@ -52,7 +52,7 @@ object LocalManageUtil {
      * @param context   context
      * @param newConfig newConfig
      */
-    fun saveSystemCurrentLanguage(context: Context, newConfig: Configuration?) {
+    fun saveSystemCurrentLanguage(context: Context, newConfig: Configuration) {
         SPUtil.getInstance(context)?.systemCurrentLocal = MultiLanguage.getSystemLocal(newConfig)
     }
 
